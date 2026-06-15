@@ -1,0 +1,6 @@
+{
+  "name": "Abhiyantri Setu",
+  "description": "A construction and home services marketplace platform for the Indian market.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
