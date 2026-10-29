@@ -8,7 +8,36 @@
 <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#0a0d1a">
-<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* mobile fit */
+*,*::before,*::after{box-sizing:border-box}
+.duo>*,.paint-grid>*,.fin-grid>*,.lists>*,.contact>*,.gallery>*,.steps>*,.why>*{min-width:0}
+html,body{max-width:100%;overflow-x:clip}
+@media (max-width:700px){
+  .hero{padding-block:24px 70px;align-items:start;min-height:auto}
+  .hero h1{font-size:clamp(2.5rem,12vw,3.4rem);max-width:none}
+  .hero .lede{font-size:1rem}
+  .cta .btn{flex:1 1 100%;justify-content:center}
+  .swatches{border-radius:18px;width:100%;justify-content:center}
+  .swatches span{flex-basis:100%;text-align:center}
+  .hero .wrap{padding-top:50vh}
+  .station{min-height:auto;padding-block:52vh 40px;align-items:end}
+  .panel{max-width:none;width:100%;padding:22px;gap:14px}
+  .panel h2{font-size:2rem}
+  nav .btn.primary{padding:9px 14px!important;font-size:.82rem}
+  .brand img{width:38px}.brand b{font-size:.85rem}.brand small{display:none}
+  .head h2{font-size:2rem}
+  .carousel{height:440px}
+  .cap h3{font-size:1.2rem}
+  .fan{height:340px}.fan .s{height:270px;width:60px;left:-30px}
+  .cube-wrap{height:260px}.cube{width:150px;height:150px}
+  .cube .c1{transform:translateZ(75px)}.cube .c2{transform:rotateY(90deg) translateZ(75px)}.cube .c3{transform:rotateY(180deg) translateZ(75px)}.cube .c4{transform:rotateY(-90deg) translateZ(75px)}.cube .c5{transform:rotateX(90deg) translateZ(75px)}.cube .c6{transform:rotateX(-90deg) translateZ(75px)}
+  .final h2{font-size:2.6rem}
+  .ccard .v{font-size:1.25rem}
+  footer{padding-bottom:90px}
+  .scroll-hint{display:none}
+}
+</style>
 </head>
 <body>
 <title>Abhiyantri Setu Work Profile</title>
@@ -572,11 +601,12 @@ function camFor(i,side){
   if(i>=6){return {p:new T.Vector3(center.x+Math.sin(Date.now()*.00005)*50,30,center.z+42),t:center.clone()}}
   const c=stations[i].clone().add(new T.Vector3(0,1.2,0));
   const off=i===0?new T.Vector3(11,8,15):new T.Vector3(8.5,6.5,9.5);
-  if(narrow())off.multiplyScalar(1.45);
+  if(narrow()){off.multiplyScalar(i===0?1.25:1.35);}
   const p=c.clone().add(off);
   const dir=c.clone().sub(p).normalize(),right=new T.Vector3().crossVectors(dir,new T.Vector3(0,1,0)).normalize();
   const k=narrow()?0:(side==='left'?(i===0?-5.2:-3.4):side==='right'?3.4:0);
-  return {p:p.add(right.clone().multiplyScalar(k)),t:c.add(right.multiplyScalar(k))};
+  const up=narrow()?new T.Vector3(0,-2.2,0):new T.Vector3();
+  return {p:p.add(right.clone().multiplyScalar(k)).add(up),t:c.add(right.multiplyScalar(k)).add(up)};
 }
 const secs=[...document.querySelectorAll('[data-st]')];
 const curP=new T.Vector3(),curT=new T.Vector3();{const a=camFor(0,'left');curP.copy(a.p);curT.copy(a.t)}
@@ -663,7 +693,7 @@ box.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;drag
 box.addEventListener('pointermove',e=>{if(drag)target=drag.t+(e.clientX-drag.x)*.006});
 const end=()=>{if(drag){target=Math.round(target/step)*step;drag=null}};box.addEventListener('pointerup',end);box.addEventListener('pointercancel',end);
 let lastY=scrollY;addEventListener('scroll',()=>{const b=box.getBoundingClientRect();if(b.bottom>0&&b.top<innerHeight&&!drag){target-= (scrollY-lastY)*.0025}lastY=scrollY},{passive:true});
-function size(){const w=box.clientWidth,h=box.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.position.z=w<600?21:16.5;cam.updateProjectionMatrix()}
+function size(){const w=box.clientWidth,h=box.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.position.z=w<600?17.5:16.5;cam.updateProjectionMatrix()}
 new ResizeObserver(size).observe(box);size();
 const capt=document.getElementById('capt'),capk=document.getElementById('capk'),capn=document.getElementById('capn');let shown=-1;
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
