@@ -56,7 +56,7 @@ section{position:relative}
 .alt{background:var(--bg-2)}
 
 /* reveal (only hidden once JS confirms it can show them) */
-.js .rv{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.js .rv{opacity:0;transform:translateY(40px);transition:opacity 1.4s cubic-bezier(.2,.7,.2,1),transform 1.4s cubic-bezier(.2,.7,.2,1)}
 .js .rv.in{opacity:1;transform:none}
 .js .rv-d1{transition-delay:.08s}.js .rv-d2{transition-delay:.16s}.js .rv-d3{transition-delay:.24s}
 .js .clip{clip-path:inset(0 0 100% 0);transition:clip-path 1.2s cubic-bezier(.7,0,.2,1)}
@@ -110,7 +110,7 @@ nav.main .wrap{display:flex;align-items:center;justify-content:space-between;gap
 
 /* service marquee */
 .marquee{background:var(--navy);color:#fff;overflow:hidden;padding-block:20px;border-block:1px solid var(--navy-2)}
-.marquee .track{display:flex;gap:44px;width:max-content;animation:mq 42s linear infinite;font-weight:700;font-size:1.08rem;white-space:nowrap}
+.marquee .track{display:flex;gap:44px;width:max-content;animation:mq 70s linear infinite;font-weight:700;font-size:1.08rem;white-space:nowrap}
 .marquee i{font-style:normal;color:var(--orange)}
 @keyframes mq{to{transform:translateX(-50%)}}
 
@@ -134,7 +134,7 @@ nav.main .wrap{display:flex;align-items:center;justify-content:space-between;gap
 .approach b{color:var(--ink);display:block;margin-bottom:2px}
 
 /* 3D build sequence */
-.build{height:640vh;background:var(--navy)}
+.build{height:1050vh;background:var(--navy)}
 .build .pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;grid-template-columns:minmax(320px,.8fr) 1.2fr;color:var(--on-navy)}
 .build .side{padding:clamp(28px,4vw,64px);padding-top:calc(74px + 20px);padding-left:max(20px,env(safe-area-inset-left,0px),calc((100vw - 1220px)/2 + 20px));display:flex;flex-direction:column;justify-content:center;gap:22px;z-index:2;min-width:0}
 .build h2{color:#fff;font-size:clamp(1.9rem,3.4vw,2.9rem)}
@@ -158,7 +158,7 @@ nav.main .wrap{display:flex;align-items:center;justify-content:space-between;gap
 .hint{position:absolute;left:50%;top:22px;transform:translateX(-50%);font:500 .66rem var(--mono);letter-spacing:.16em;color:var(--on-navy-muted);text-transform:uppercase;background:rgba(255,255,255,.06);padding:7px 12px;border-radius:99px;white-space:nowrap}
 .build-fallback{position:absolute;inset:0;background:url(img/ceiling.jpg) center/cover}
 @media (max-width:900px){
-  .build{height:560vh}
+  .build{height:900vh}
   .build .pin{grid-template-columns:1fr;grid-template-rows:46% 54%}
   .build .stage-cv{grid-row:1}
   .build .side{grid-row:2;justify-content:flex-start;padding-top:18px;gap:12px;overflow:hidden}
@@ -210,7 +210,7 @@ nav.main .wrap{display:flex;align-items:center;justify-content:space-between;gap
 @media (max-width:700px){.drawer{grid-template-columns:0 1fr}}
 
 /* cover-flow gallery */
-.flow{height:820vh;background:#070f24}
+.flow{height:1400vh;background:#070f24}
 #gal{position:absolute;inset:0;width:100%;height:100%;display:block}
 .flow.webgl .pin::before,.flow.webgl .pin::after{content:"";position:absolute;left:0;right:0;z-index:1;pointer-events:none}
 .flow.webgl .pin::before{top:0;height:42%;background:linear-gradient(#070f24 30%,rgba(7,15,36,0))}
@@ -705,7 +705,7 @@ function initGallery(){
   const VS=`uniform sampler2D map;uniform float uDepth;uniform float uReveal;uniform float uTime;varying vec2 vUv;varying float vD;
   void main(){vUv=uv;vec3 c=texture2D(map,uv).rgb;float l=dot(c,vec3(.299,.587,.114));
    float d=pow(1.0-uv.y,1.6)*.75+l*.25;vD=d;vec3 p=position;
-   p.z+=d*uDepth*uReveal;p.z+=sin(uv.x*8.0+uTime*1.5)*.18*(1.0-uReveal)*(1.0-uv.y);
+   p.z+=d*uDepth*uReveal;p.z+=sin(uv.x*8.0+uTime*.8)*.18*(1.0-uReveal)*(1.0-uv.y);
    gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.0);}`;
   const FS=`uniform sampler2D map;uniform float uReveal;uniform float uDim;varying vec2 vUv;varying float vD;
   float h(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
@@ -734,10 +734,10 @@ function initGallery(){
   box.addEventListener('pointermove',e=>{const r=box.getBoundingClientRect();gmx=(e.clientX-r.left)/r.width-.5;gmy=(e.clientY-r.top)/r.height-.5});
   (function frame(){requestAnimationFrame(frame);if(!vis)return;t+=.016;
     const narrow=box.clientWidth<700,n=G.length;
-    const raw=galP*(n-1),fl=Math.min(n-2,Math.floor(raw)),fr=raw-fl,fi=raw>=n-1?n-1:fl+ease(clamp((fr-.3)/.4)),idx=Math.round(fi);gSet(idx);
-    const DIST=narrow?9.5:7;const targetZ=-fi*GAP+DIST;camZ+=(targetZ-camZ)*(reduce?1:.08);
+    const raw=galP*(n-1),fl=Math.min(n-2,Math.floor(raw)),fr=raw-fl,fi=raw>=n-1?n-1:fl+ease(clamp((fr-.25)/.5)),idx=Math.round(fi);gSet(idx);
+    const DIST=narrow?9.5:7;const targetZ=-fi*GAP+DIST;camZ+=(targetZ-camZ)*(reduce?1:.035);
     camX+=(0-camX)*.06;
-    smx+=(gmx-smx)*.08;smy+=(gmy-smy)*.08;
+    smx+=(gmx-smx)*.04;smy+=(gmy-smy)*.04;
     const cy=narrow?1.5:.75;cam.position.set(camX+smx*.5,cy-smy*.3,camZ);cam.lookAt(0,cy,camZ-10);
     items.forEach((o,i)=>{const dz=camZ-o.grp.position.z;
       const r=clamp((DIST+14-dz)/10)*clamp((dz-2.6)/(DIST-4.2));o.grp.visible=dz>1;o.mat.uniforms.uReveal.value=reduce?1:ease(r);o.mat.uniforms.uTime.value=t;
@@ -745,7 +745,7 @@ function initGallery(){
       o.frame.material.opacity=focus*.9;o.shadow.material.opacity=r*.35;
       o.grp.position.x=o.grp.userData.side*(narrow?2.2:3.4)*(1-focus);
       o.grp.rotation.y=o.grp.userData.base*(1-focus)+smx*.35*focus;o.grp.rotation.x=-smy*.18*focus;
-      o.grp.position.y=reduce?0:Math.sin(t*.8+i)*.06;});
+      o.grp.position.y=reduce?0:Math.sin(t*.45+i)*.06;});
     if(!reduce)dust.rotation.z+=.0003;
     R.render(S3,cam);})();
   return true;
@@ -837,11 +837,11 @@ function initBuild(){
   new ResizeObserver(size).observe(wrap);size();
   const st=(p,i)=>clamp((p-i/6)*6);
   const nar=()=>wrap.clientWidth<700,camA=new T.Vector3(17,12,18),camB=new T.Vector3(12.5,6.8,14),look=new T.Vector3(-.6,1.5,-1),tmp=new T.Vector3();
-  let t=0,visible=true;
+  let t=0,visible=true,bp=0;
   new IntersectionObserver(e=>{visible=e[0].isIntersecting}).observe(wrap);
   function frame(){
     requestAnimationFrame(frame);if(!visible)return;t+=.01;
-    const p=buildP;
+    bp+=(buildP-bp)*(reduce?1:.05);const p=bp;
     const s0=ease(st(p,0)),s1=st(p,1),s2=ease(st(p,2)),s3=ease(st(p,3)),s4=ease(st(p,4)),s5=ease(st(p,5));
     primerM.opacity=s0;
     tiles.forEach(o=>{const k=clamp((s1-o.d*.75)/.25);o.m.visible=k>0;o.m.position.y=.03+(1-ease(k))*2.5;o.m.rotation.x=(1-k)*.6});
