@@ -461,7 +461,7 @@ footer{padding-block:26px;color:var(--muted);font-size:.88rem;border-top:1px sol
     <div class="head rv"><p class="eyebrow">Our work</p><h2>Spaces we design and paint</h2><p>Drag, swipe or scroll to turn the gallery. Each finished space starts as a 3D concept like the ones below.</p></div>
     <div class="carousel rv" id="carousel">
       <canvas id="ring" aria-label="3D rotating gallery of interior and painting work"></canvas>
-      <div class="ring-fallback" id="ringfb"><img src="img/living.jpg" alt="Living room"><img src="img/kitchen.jpg" alt="Modular kitchen"><img src="img/bedroom.jpg" alt="Master bedroom"><img src="img/exterior.jpg" alt="Exterior repaint"><img src="img/tools.jpg" alt="Paint finishes"></div>
+      <div class="ring-fallback" id="ringfb"><img src="img/living.jpg" alt="Living room"><img src="img/kitchen.jpg" alt="Modular kitchen"><img src="img/bedroom.jpg" alt="Master bedroom"><img src="img/exterior.jpg" alt="Exterior repaint"><img src="img/tools.jpg" alt="Paint finishes"><img src="img/ceiling.jpg" alt="Hotel lobby ceiling"><img src="img/reception.jpg" alt="Corporate reception"><img src="img/wpc.jpg" alt="WPC soffit"><img src="img/flooring.jpg" alt="Tile flooring"></div>
       <div class="ring-nav"><button type="button" id="rprev" aria-label="Previous image">←</button><button type="button" id="rnext" aria-label="Next image">→</button></div>
       <div class="cap"><div><small id="capk">Interior design</small><h3 id="capt">Living room</h3></div><span id="capn">01 / 05</span></div>
     </div>
@@ -800,13 +800,13 @@ try{
 (function(){
 const T=window.THREE,cv=document.getElementById('ring');if(!T||!cv)return;
 const box=document.getElementById('carousel');
-const items=[['living','Living room','Interior design'],['kitchen','Modular kitchen','Kitchens'],['bedroom','Master bedroom','Bedrooms & ceilings'],['exterior','Villa exterior repaint','Exterior painting'],['tools','Finishes & colour','Painting systems']];
+const items=[['living','Living room','Interior design'],['kitchen','Modular kitchen','Kitchens'],['bedroom','Master bedroom','Bedrooms & ceilings'],['exterior','Villa exterior repaint','Exterior painting'],['tools','Finishes & colour','Painting systems'],['ceiling','Hotel lobby ceiling','POP & gypsum ceilings'],['reception','Corporate reception','Panelling & fit-out'],['wpc','WPC soffit & cladding','WPC systems'],['flooring','Large-format tiling','Flooring & tiling']];
 let R;try{R=new T.WebGLRenderer({canvas:cv,antialias:true,alpha:true})}catch(e){return}
 document.getElementById('ringfb').hidden=true;
 R.setPixelRatio(Math.min(devicePixelRatio,2));R.outputEncoding=T.sRGBEncoding;
-const S=new T.Scene(),cam=new T.PerspectiveCamera(34,1,.1,100);cam.position.set(0,.6,16.5);cam.lookAt(0,0,0);
+const S=new T.Scene(),cam=new T.PerspectiveCamera(34,1,.1,100);cam.position.set(0,.6,19);cam.lookAt(0,0,0);
 const ring=new T.Group();S.add(ring);
-const N=items.length,RAD=6.2,W=4.4,H=3.3,loader=new T.TextureLoader();
+const N=items.length,RAD=8.6,W=4.4,H=3.3,loader=new T.TextureLoader();
 function bent(){const g=new T.PlaneGeometry(W,H,32,1),p=g.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i),a=x/RAD;p.setX(i,Math.sin(a)*RAD);p.setZ(i,Math.cos(a)*RAD-RAD)}g.computeVertexNormals();return g}
 const planes=[];
 items.forEach((it,i)=>{
@@ -829,7 +829,7 @@ box.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;drag
 box.addEventListener('pointermove',e=>{if(drag)target=drag.t+(e.clientX-drag.x)*.006});
 const end=()=>{if(drag){target=Math.round(target/step)*step;drag=null}};box.addEventListener('pointerup',end);box.addEventListener('pointercancel',end);
 let lastY=scrollY;addEventListener('scroll',()=>{const b=box.getBoundingClientRect();if(b.bottom>0&&b.top<innerHeight&&!drag){target-= (scrollY-lastY)*.0025}lastY=scrollY},{passive:true});
-function size(){const w=box.clientWidth,h=box.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.position.z=w<600?17.5:16.5;cam.updateProjectionMatrix()}
+function size(){const w=box.clientWidth,h=box.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.position.z=w<600?20.5:19;cam.updateProjectionMatrix()}
 new ResizeObserver(size).observe(box);size();
 const capt=document.getElementById('capt'),capk=document.getElementById('capk'),capn=document.getElementById('capn');let shown=-1;
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
