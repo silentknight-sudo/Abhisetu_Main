@@ -138,27 +138,44 @@ nav.main .wrap{display:flex;align-items:center;justify-content:space-between;gap
 .approach p{color:var(--muted)}
 .approach b{color:var(--ink);display:block;margin-bottom:2px}
 
-/* transformations theatre */
-.xf{height:760vh;background:#050b1c}
-.xf .pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;color:#fff;padding-top:calc(74px + clamp(20px,4vh,48px))}
-#xfc{position:absolute;inset:0;width:100%;height:100%;display:block}
-.xf .pin::before,.xf .pin::after{content:"";position:absolute;left:0;right:0;z-index:1;pointer-events:none}
-.xf .pin::before{top:0;height:38%;background:linear-gradient(#050b1c 25%,rgba(5,11,28,0))}
-.xf .pin::after{bottom:0;height:34%;background:linear-gradient(rgba(5,11,28,0),#050b1c 80%)}
-.xf-top{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;width:100%;pointer-events:none}
-.xf-top .lead{color:var(--on-navy-muted)}
-.xf .count{font:500 .8rem var(--mono);color:var(--on-navy-muted)}
-.xf-cap{position:absolute;left:0;right:0;bottom:calc(30px + env(safe-area-inset-bottom,0px));z-index:2;display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
-.xf-cap>div{max-width:520px;transition:opacity .35s}
-.xf-cap span{display:block;font:500 .7rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--orange-2);margin-bottom:6px}
-.xf-cap b{display:block;font-size:clamp(1.4rem,2.8vw,2.1rem);font-weight:800;letter-spacing:-.02em}
-.xf-cap p{color:var(--on-navy-muted);margin-top:6px;font-size:.98rem}
-.xf-fallback{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:30px auto 0;padding-inline:20px}
-.xf-fallback video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:16px}
-.xf.webgl .xf-fallback{display:none}
-.xf:not(.webgl) .xf-cap{display:none}
-.xf-cap b{text-wrap:balance}
-@media (max-width:700px){.xf .pin{padding-top:84px}.xf-top .lead{display:none}.xf-cap p{display:none}.xf-cap{bottom:calc(92px + env(safe-area-inset-bottom,0px))}.xf-cap .btn{display:none}.xf-cap p{font-size:.9rem}}
+/* transformations: scroll-scrubbed video chapters */
+.xf{background:#050b1c;color:#fff}
+.xf-intro{padding-block:clamp(80px,10vw,130px) 10px;display:grid;gap:16px;max-width:760px}
+.xf-intro .lead{color:var(--on-navy-muted)}
+.chap{height:420vh;position:relative}
+.chap-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;align-items:center;padding-top:74px}
+.chap-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;width:100%}
+.chap-text{display:grid;gap:14px;max-width:480px}
+.chap-n{font:500 .72rem var(--mono);letter-spacing:.14em;color:var(--on-navy-muted)}
+.chap-k{font:500 .72rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--orange-2)}
+.chap h3{font-size:clamp(1.7rem,3.2vw,2.6rem);color:#fff}
+.chap-st{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:6px}
+.chap-st li{display:flex;gap:12px;align-items:baseline;padding:10px 12px;border-radius:10px;color:var(--on-navy-muted);transition:background .4s,color .4s}
+.chap-st li i{font:500 .72rem var(--mono);font-style:normal}
+.chap-st li.on{background:rgba(255,255,255,.07);color:#fff}
+.chap-st li.on i,.chap-st li.done i{color:var(--orange-2)}
+.chap-bar{height:4px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:6px}
+.chap-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--orange-2));transform-origin:0 50%;transform:scaleX(0)}
+.chap-time{display:flex;justify-content:space-between;font:500 .7rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--on-navy-muted)}
+.chap-time b{color:#fff;font-variant-numeric:tabular-nums}
+.chap-cta{justify-self:start;margin-top:6px}
+.chap-stage{perspective:1400px;display:flex;justify-content:center;align-items:center;height:100%}
+.chap-card{position:relative;height:min(76vh,720px);aspect-ratio:9/16;max-width:100%;border-radius:22px;overflow:hidden;border:5px solid #fff;box-shadow:0 50px 90px -30px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.08);transform-style:preserve-3d;will-change:transform;background:#111}
+.chap-card video{width:100%;height:100%;object-fit:cover;display:block}
+.chap-card::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.18),transparent 35%);pointer-events:none}
+.chap-badge{position:absolute;left:12px;top:12px;font:500 .62rem var(--mono);letter-spacing:.12em;text-transform:uppercase;background:rgba(14,28,61,.8);color:#fff;padding:6px 10px;border-radius:8px}
+@media (max-width:860px){
+  .chap{height:380vh}
+  .chap-pin{padding-top:64px;align-items:stretch}
+  .chap-grid{grid-template-columns:1fr;grid-template-rows:1fr auto;gap:10px;height:100%;padding-block:12px 96px}
+  .chap-stage{grid-row:1;min-height:0}
+  .chap-card{height:100%;max-height:58svh;border-width:3px;border-radius:16px}
+  .chap-text{grid-row:2;gap:8px;max-width:none}
+  .chap h3{font-size:1.3rem}
+  .chap-n,.chap-cta{display:none}
+  .chap-st li{display:none;padding:6px 10px}
+  .chap-st li.on{display:flex}
+}
 
 /* 3D build sequence */
 .build{height:1050vh;background:var(--navy)}
@@ -466,14 +483,54 @@ footer b{color:#fff}
 </section>
 
 <section class="xf" id="transform" aria-label="Transformation videos">
-  <div class="pin">
-    <canvas id="xfc" aria-label="3D theatre of three transformation videos"></canvas>
-    <div class="xf-top wrap"><div style="display:grid;gap:12px;max-width:640px"><p class="eyebrow">Transformations</p><h2 class="h2" style="color:#fff">Watch bare shells become finished spaces</h2><p class="lead">Scroll to move between the screens. Each concept animation plays from raw shell to finished interior.</p></div><span class="count" id="xfCount">01 / 03</span></div>
-    <div class="xf-cap wrap">
-      <div><span id="xfKind">Partitions &amp; ceiling grid</span><b id="xfTitle">Shell to framed penthouse</b><p id="xfText">A bare concrete shell is framed with partitions, glazing and a ceiling grid, ready for finishes.</p></div>
-      <a class="btn btn-primary" id="xfCta" href="#services">See this service</a>
+  <div class="wrap xf-intro"><p class="eyebrow rv">Transformations</p><h2 class="h2 rv rv-d1" style="color:#fff">Watch bare shells become finished spaces</h2><p class="lead rv rv-d2">Scroll slowly. Each concept animation plays frame by frame with your scroll, from raw shell to finished interior. Scroll back to rewind.</p></div>
+  <div class="chap" data-svc="7">
+    <div class="chap-pin">
+      <div class="wrap chap-grid">
+        <div class="chap-text">
+          <p class="chap-n">Transformation 01 / 03</p>
+          <span class="chap-k">Partitions &amp; ceiling grid</span>
+          <h3>Shell to framed penthouse</h3>
+          <ol class="chap-st"><li data-a="0.000"><i>01</i>Bare concrete shell</li><li data-a="0.333"><i>02</i>Metal-stud partitions and glazing</li><li data-a="0.667"><i>03</i>Ceiling grid and board-ready walls</li></ol>
+          <div class="chap-bar"><i></i></div>
+          <div class="chap-time"><span>Shell</span><b>0%</b><span>Finished</span></div>
+          <a class="btn btn-primary chap-cta" href="#services">See this service</a>
+        </div>
+        <div class="chap-stage"><div class="chap-card"><video src="vid/s1.mp4" poster="vid/t1.jpg" muted playsinline preload="auto" aria-label="Shell to framed penthouse concept animation"></video><span class="chap-badge">Concept animation</span></div></div>
+      </div>
     </div>
-    <div class="xf-fallback" id="xfFallback"><video src="vid/t1.mp4" poster="vid/t1.jpg" muted loop playsinline autoplay></video><video src="vid/t2.mp4" poster="vid/t2.jpg" muted loop playsinline autoplay></video><video src="vid/t3.mp4" poster="vid/t3.jpg" muted loop playsinline autoplay></video></div>
+  </div>
+  <div class="chap" data-svc="6">
+    <div class="chap-pin">
+      <div class="wrap chap-grid">
+        <div class="chap-text">
+          <p class="chap-n">Transformation 02 / 03</p>
+          <span class="chap-k">Panelling, ceiling &amp; lighting</span>
+          <h3>Corridor finished in wood and marble</h3>
+          <ol class="chap-st"><li data-a="0.000"><i>01</i>Framed walls ready for finishing</li><li data-a="0.333"><i>02</i>Wood panelling and marble floor</li><li data-a="0.667"><i>03</i>Cove-lit ceiling, ready for handover</li></ol>
+          <div class="chap-bar"><i></i></div>
+          <div class="chap-time"><span>Shell</span><b>0%</b><span>Finished</span></div>
+          <a class="btn btn-primary chap-cta" href="#services">See this service</a>
+        </div>
+        <div class="chap-stage"><div class="chap-card"><video src="vid/s2.mp4" poster="vid/t2.jpg" muted playsinline preload="auto" aria-label="Corridor finished in wood and marble concept animation"></video><span class="chap-badge">Concept animation</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="chap" data-svc="5">
+    <div class="chap-pin">
+      <div class="wrap chap-grid">
+        <div class="chap-text">
+          <p class="chap-n">Transformation 03 / 03</p>
+          <span class="chap-k">Marble flooring &amp; kitchen fit-out</span>
+          <h3>Marble floor and kitchen install</h3>
+          <ol class="chap-st"><li data-a="0.000"><i>01</i>Floor prepared for stone</li><li data-a="0.333"><i>02</i>Large marble slabs laid</li><li data-a="0.667"><i>03</i>Marble island and fluted cabinetry</li></ol>
+          <div class="chap-bar"><i></i></div>
+          <div class="chap-time"><span>Shell</span><b>0%</b><span>Finished</span></div>
+          <a class="btn btn-primary chap-cta" href="#services">See this service</a>
+        </div>
+        <div class="chap-stage"><div class="chap-card"><video src="vid/s3.mp4" poster="vid/t3.jpg" muted playsinline preload="auto" aria-label="Marble floor and kitchen install concept animation"></video><span class="chap-badge">Concept animation</span></div></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -730,55 +787,20 @@ const figs=[...ft.children],flowCount=document.getElementById('flowCount');
 
 
 
-/* ---------- transformations theatre ---------- */
-const XF=[{k:"Partitions & ceiling grid",t:"Shell to framed penthouse",p:"A bare concrete shell is framed with partitions, glazing and a ceiling grid, ready for finishes.",svc:7},
-{k:"Panelling, ceiling & lighting",t:"Corridor finished in wood and marble",p:"Wood wall panelling, a cove-lit gypsum ceiling and book-matched marble flooring complete the space.",svc:6},
-{k:"Marble flooring & kitchen fit-out",t:"Marble floor and kitchen install",p:"Large marble slabs are laid, then a marble island and fluted wood cabinetry are installed.",svc:5}];
-const xfEl=document.getElementById('transform');let xfP=0,XG=null,xfCur=-1;
-const xfT=document.getElementById('xfTitle'),xfK=document.getElementById('xfKind'),xfX=document.getElementById('xfText'),xfC=document.getElementById('xfCount');
-document.getElementById('xfCta').addEventListener('click',e=>{e.preventDefault();openD(XF[Math.max(0,xfCur)].svc)});
-if(window.THREE){try{XG=initXF();xfEl.classList.add('webgl')}catch(e){XG=null}}
-if(XG)document.querySelectorAll('#xfFallback video').forEach(v=>{v.removeAttribute('autoplay');v.pause();v.preload='none'});
-function initXF(){
-  const T=THREE,cv=document.getElementById('xfc');
-  const R=new T.WebGLRenderer({canvas:cv,antialias:true});R.setPixelRatio(Math.min(devicePixelRatio,1.75));R.setClearColor(0x050b1c);R.outputEncoding=T.sRGBEncoding;
-  const S3=new T.Scene();S3.fog=new T.Fog(0x050b1c,9,26);
-  const cam=new T.PerspectiveCamera(42,1,.1,80);
-  const vids=[1,2,3].map(n=>{const v=document.createElement('video');v.src='vid/t'+n+'.mp4';v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='auto';v.crossOrigin='anonymous';return v});
-  const RAD=7.5,ANG=[-.62,0,.62],SW=2.7,SH=4.8,screens=[];
-  function bent(w,h){const g=new T.PlaneGeometry(w,h,40,1),p=g.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i);p.setZ(i,-x*x*.09)}return g}
-  ANG.forEach((a,i)=>{
-    const tex=new T.VideoTexture(vids[i]);tex.encoding=T.sRGBEncoding;tex.minFilter=T.LinearFilter;
-    const poster=new T.TextureLoader().load('vid/t'+(i+1)+'.jpg');poster.encoding=T.sRGBEncoding;
-    const g=new T.Group();g.position.set(Math.sin(a)*RAD,.2,-Math.cos(a)*RAD);g.rotation.y=-a;S3.add(g);
-    const mat=new T.MeshBasicMaterial({map:poster,transparent:true});const m=new T.Mesh(bent(SW,SH),mat);g.add(m);
-    const fr=new T.Mesh(bent(SW+.12,SH+.12),new T.MeshBasicMaterial({color:0xf07c14,transparent:true,opacity:0}));fr.position.z=-.04;g.add(fr);
-    const ref=new T.Mesh(bent(SW,SH),new T.MeshBasicMaterial({map:poster,transparent:true,opacity:.12}));ref.scale.y=-1;ref.position.y=-SH-.12;g.add(ref);
-    const glow=new T.Mesh(new T.PlaneGeometry(SW*1.8,1.2),new T.MeshBasicMaterial({color:0xf07c14,transparent:true,opacity:0,depthWrite:false}));glow.rotation.x=-Math.PI/2;glow.position.set(0,-SH/2-.05,.6);g.add(glow);
-    screens.push({g,mat,ref,fr,glow,tex,poster,ready:false});
-    vids[i].addEventListener('playing',()=>{const o=screens[i];if(!o.ready){o.ready=true;o.mat.map=o.tex;o.ref.material.map=o.tex;o.mat.needsUpdate=o.ref.material.needsUpdate=true}});
-  });
-  const grid=new T.PolarGridHelper(RAD+4,24,10,64,0x1d2f5e,0x111f43);grid.position.y=-2.45;S3.add(grid);
-  const dg=new T.BufferGeometry(),N=600,dp=new Float32Array(N*3);for(let i=0;i<N;i++){const r=3+Math.random()*12,a=Math.random()*6.28;dp[i*3]=Math.cos(a)*r;dp[i*3+1]=Math.random()*8-3;dp[i*3+2]=Math.sin(a)*r}
-  dg.setAttribute('position',new T.BufferAttribute(dp,3));const dust=new T.Points(dg,new T.PointsMaterial({color:0xf3c48a,size:.035,transparent:true,opacity:.55,depthWrite:false}));S3.add(dust);
-  const box=cv.parentElement;let vis=false;new IntersectionObserver(e=>{vis=e[0].isIntersecting;if(!vis)vids.forEach(v=>v.pause());else if(xfCur>=0)vids[xfCur].play().catch(()=>{})}).observe(box);
-  function size(){const w=box.clientWidth,h=box.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.fov=w<700?62:42;cam.updateProjectionMatrix()}
-  new ResizeObserver(size).observe(box);size();
-  let yaw=0,t=0,mx2=0,my2=0,sx=0,sy=0;box.addEventListener('pointermove',e=>{const r=box.getBoundingClientRect();mx2=(e.clientX-r.left)/r.width-.5;my2=(e.clientY-r.top)/r.height-.5});
-  function setX(i){if(i===xfCur)return;xfCur=i;vids.forEach((v,k)=>{if(k===i){v.currentTime=0;v.play().catch(()=>{})}else v.pause()});
-    const cap=xfT.parentElement;cap.style.opacity=0;setTimeout(()=>{xfK.textContent=XF[i].k;xfT.textContent=XF[i].t;xfX.textContent=XF[i].p;cap.style.opacity=1},200);xfC.textContent=pad(i+1)+' / 03'}
-  (function frame(){requestAnimationFrame(frame);if(!vis)return;t+=.016;
-    const raw=xfP*2,fl=Math.min(1,Math.floor(raw)),fr=raw-fl,fi=raw>=2?2:fl+ease(clamp((fr-.25)/.5)),idx=Math.round(fi);setX(idx);
-    const targetYaw=-(-.62+fi*.62);yaw+=(targetYaw-yaw)*(reduce?1:.04);
-    sx+=(mx2-sx)*.04;sy+=(my2-sy)*.04;const narrow=box.clientWidth<700;
-    const ang=-yaw,B=narrow?7.5:4.2,cy=narrow?.35:.9;
-    cam.position.set(-Math.sin(ang)*B+sx*.8,cy-sy*.4,Math.cos(ang)*B);
-    cam.lookAt(Math.sin(ang)*RAD,cy+(narrow?-.1:.75),-Math.cos(ang)*RAD);
-    screens.forEach((o,i)=>{const f=1-clamp(Math.abs(i-fi));o.fr.material.opacity=f*.9;o.glow.material.opacity=f*.18;
-      const sc=1+f*.06;o.g.scale.set(sc,sc,sc);o.mat.color.setScalar(.45+.55*f);o.g.position.y=.2+(reduce?0:Math.sin(t*.5+i)*.05)});
-    if(!reduce)dust.rotation.y+=.0004;R.render(S3,cam)})();
-  return true;
+/* ---------- transformations: video scrubbing ---------- */
+const chaps=[...document.querySelectorAll('.chap')].map(el=>{const v=el.querySelector('video');return{el,v,card:el.querySelector('.chap-card'),bar:el.querySelector('.chap-bar i'),pct:el.querySelector('.chap-time b'),st:[...el.querySelectorAll('.chap-st li')],cur:-1,want:0,shown:-1}});
+chaps.forEach(c=>{c.el.querySelector('.chap-cta').addEventListener('click',e=>{e.preventDefault();openD(+c.el.dataset.svc)});
+  c.v.addEventListener('loadedmetadata',()=>{c.shown=-1});});
+let unlocked=false;function unlock(){if(unlocked)return;unlocked=true;chaps.forEach(c=>{try{c.v.load()}catch(e){}const p=c.v.play();if(p&&p.then)p.then(()=>c.v.pause()).catch(()=>{});else c.v.pause()})}
+['touchstart','pointerdown','wheel','keydown','scroll'].forEach(ev=>addEventListener(ev,unlock,{once:true,passive:true}));
+function scrubChaps(){
+  chaps.forEach(c=>{const r=c.el.getBoundingClientRect();if(r.bottom<-innerHeight||r.top>innerHeight*2)return;
+    const p=clamp(-r.top/(r.height-innerHeight));c.want=p;
+    c.bar.style.transform='scaleX('+p+')';c.pct.textContent=Math.round(p*100)+'%';
+    const si=Math.min(c.st.length-1,Math.floor(p*c.st.length));if(si!==c.cur){c.cur=si;c.st.forEach((li,k)=>{li.classList.toggle('on',k===si);li.classList.toggle('done',k<si)})}
+    if(!reduce){const ry=(.5-p)*28,rx=Math.sin(p*Math.PI)*-4,s=.9+Math.sin(p*Math.PI)*.1;c.card.style.transform='rotateY('+ry+'deg) rotateX('+rx+'deg) scale('+s+')'}});
 }
+(function seekLoop(){requestAnimationFrame(seekLoop);chaps.forEach(c=>{const d=c.v.duration;if(!d||c.v.seeking)return;const tt=Math.min(d-.05,c.want*d);if(Math.abs(tt-c.v.currentTime)>1/30){c.v.currentTime=tt}})})();
 
 /* ---------- 3D depth gallery ---------- */
 const flowEl=document.getElementById('work');let galP=0,GL=null;
@@ -965,7 +987,7 @@ function loop(){
   // build sequence
   buildP=secP(buildSec);bbar.style.transform='scaleX('+buildP+')';setStage(Math.min(5,Math.floor(buildP*6)));
   // cover flow
-  xfP=secP(xfEl);const fp=secP(flow);galP=fp;if(!GL){const fw=figs[0].offsetWidth,gap=parseFloat(getComputedStyle(ft).gap)||30,stepW=fw+gap;
+  scrubChaps();const fp=secP(flow);galP=fp;if(!GL){const fw=figs[0].offsetWidth,gap=parseFloat(getComputedStyle(ft).gap)||30,stepW=fw+gap;
   const x=-(fp*(figs.length-1)*stepW)-fw/2;ft.style.transform='translate3d('+x+'px,0,0)';
   const centre=innerWidth/2;let best=0,bd=1e9;const span=stepW*1.6;
   figs.forEach((f,i)=>{const r=f.getBoundingClientRect(),c=r.left+r.width/2,d=(c-centre)/span;const ad=Math.abs(d);if(ad<bd){bd=ad;best=i}
